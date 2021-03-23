@@ -84,7 +84,7 @@ app.get('/todos', (req, res) => {
             data: todos
         })
     })
-})
+});
 
 
 
@@ -97,7 +97,20 @@ app.get('/todos/:id', (req, res) => {
             data: todo
         })
     })
-})
+});
+
+
+
+//delete todo using id
+app.delete('/todos/:id', (req, res) => {
+    const id = req.params.id;
+    Todo.findByIdAndDelete(id, (err) => {
+        if (err) return console.error(err);
+        return res.status(200).json({
+            data: "Todo deleted"
+        })
+    })
+});
 
 
 
