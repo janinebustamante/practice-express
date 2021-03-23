@@ -22,6 +22,19 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 
+
+//schema of todo
+//message-string, done-boolean, createdAt-string
+const todoSchema = new mongoose.Schema({
+    message: String,
+    done: Boolean,
+    createdAt: String
+});
+
+const Todo = mongoose.model('Todo', todoSchema);
+
+
+
 //path parameters
 app.get('/hello/:name1/:name2', (req, res) => {
     console.log(req.params);
@@ -40,6 +53,26 @@ app.get('/hi', (req,  res) => {
 })
 
 
+
+//create todo that takes a message from body
+app.post('/todos', (req, res) => {
+    const message = req.body.message;    
+    const currentDate = new Date();
+    const createdAt = currentDate.toISOString();
+
+    let newTodo = new Todo({
+        message: message,
+        done: false,
+        createdAt: createdAt
+    })
+
+    newTodo.save((err, savedTodo) => {
+        if (err) return console.error(err);
+        return res.status(201).json({
+            data: savedTodo
+        })
+    })
+})
 
 
 const port = 3000;
