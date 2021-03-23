@@ -104,6 +104,7 @@ app.get('/todos/:id', (req, res) => {
 //delete todo using id
 app.delete('/todos/:id', (req, res) => {
     const id = req.params.id;
+
     Todo.findByIdAndDelete(id, (err) => {
         if (err) return console.error(err);
         return res.status(200).json({
@@ -112,6 +113,23 @@ app.delete('/todos/:id', (req, res) => {
     })
 });
 
+
+
+//update message
+app.put('/todos/:id', (req, res) => {
+    const id = req.params.id;
+    const message = req.body.message;
+    Todo.findById(id, (err, todo) => {
+        if(err) return console.error(err);
+        todo.message = message
+        todo.save((err, updatedTodo) => {
+            if (err) return console.error(err);
+            return res.status(200).json({
+                data: updatedTodo
+            })
+        })
+    })
+});
 
 
 const port = 3000;
