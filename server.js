@@ -75,6 +75,23 @@ app.post('/todos', (req, res) => {
 })
 
 
+
+//get all todos
+app.get('/todos', (req, res) => {
+    Todo.find({}, (err, todos) => {
+        if (err) return console.error(err);
+        return res.status(200).json({
+            data: todos
+        })
+    })
+})
+
+
+
+
+
+
+
 const port = 3000;
 app.listen(port, () => {console.log(`Listening on port ${port}`)})
 
