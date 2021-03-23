@@ -88,7 +88,16 @@ app.get('/todos', (req, res) => {
 
 
 
-
+//return 1 todo using id
+app.get('/todos/:id', (req, res) => {
+    const id = req.params.id;
+    Todo.findById(id, (err, todo) => {
+        if (err) return console.error(err);
+        return res.status(200).json({
+            data: todo
+        })
+    })
+})
 
 
 
