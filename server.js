@@ -24,13 +24,20 @@ app.use(express.urlencoded({extended: true}));
 
 //path parameters
 app.get('/hello/:name1/:name2', (req, res) => {
-    console.log(req.params)
+    console.log(req.params);
     res.json({
         message: `Hello ${req.params.name1}, ${req.params.name2}`
     });
 });
 
 
+//query parameters
+app.get('/hi', (req,  res) => {
+    console.log(req.query);
+    res.json({
+        message: `Hi ${req.query.firstName} ${req.query.lastName}`
+    })
+})
 
 
 
